@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Schedule Backup</title>
+	<style>
+		body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+            margin-bottom: 5px;
+			font-weight: bold;
+        }
+
+		input {
+            width: 180px; /* Adjust the width as needed */
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 5px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+		}
+		.password-wrapper {
+		  display: flex;
+		  align-items: center;
+		}
+		
+		.radio-label {
+            display: inline-block;
+            margin-right: 35px;
+			margin-left: 35px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+        }
+		.password-icon {
+			margin-left: -30px;
+			cursor: pointer;
+		}
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Backup</title>
+</head>
+<body>
+    <center> <h2>Scheduled Backup</h2></center> 
+
+
+    <form method="POST" action="/set_schedule">
+        <label for="scheduled_time">Scheduled time :</label>
+        <input type="text" id="scheduled_time" name="scheduled_time" placeholder="HH:MM-24hrs"required pattern="(?:[01]\d|2[0-3]):(?:[0-5]\d)">
+        <!--<label for="scheduled_time">(24hrs Format)</label> -->
+        <br><br>
+
+        <label>Select frequency:</label>
+		<br>
+		<label for="every_day">Every Day</label>
+        <input type="radio" id="every_day" name="scheduled_frequency" value="every_day" checked>
+        
+        <label for="every_week">Every Week</label>
+        <input type="radio" id="every_week" name="scheduled_frequency" value="every_week">
+        
+        <label for="every_month">Every Month</label>
+        <input type="radio" id="every_month" name="scheduled_frequency" value="every_month">
+        
+
+        <br><br>
+
+        <input type="submit" value="Set Schedule"</input>
+		
+	    <p>Scheduled time: {{ scheduled_time }}</p>
+		<p>Scheduled frequency: {{ scheduled_frequency }}</p>
+    </form>
+</body>
+</html>

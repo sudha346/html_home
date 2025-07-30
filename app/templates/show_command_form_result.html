@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cisco Switch Configuration</title>
+</head>
+<body>
+    <h1> {{ show }} - {{ ipaddress }}</h1>
+	
+    <pre> {{ sum_variable }}<pre>
+	<form id="backForm">
+        <input type="submit" value="Back">
+    </form>
+
+    <script>
+        document.getElementById("backForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Replace "target_url_here" with the desired URL you want to go back to
+            var targetUrl = "/show_command_form";
+            window.location.href = targetUrl;
+        });
+    </script>
+</body>
+</html>

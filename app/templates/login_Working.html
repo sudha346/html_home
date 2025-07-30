@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login Page</title>
+	 <script>
+        if (window.history && window.history.pushState) {
+            window.history.pushState('forward', null, './#forward');
+
+            window.onpopstate = function() {
+                window.history.pushState('forward', null, './#forward');
+            };
+        }
+    </script>
+	<style>
+		body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('{{ url_for('static', filename='Login2.jpg') }}');
+			background-repeat: no-repeat;
+			background-size: cover;
+
+        }
+
+        nav {
+			padding: 10px;
+            background-color: #335;
+			background-image: url('{{ url_for('static', filename='Login2.jpg') }}');
+        }
+		form {
+
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        label {
+            display: inline-block;
+            width: 100px;
+            margin-bottom: 5px;
+			font-weight: bold;
+        }
+
+		input {
+            width: 180px; /* Adjust the width as needed */
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-bottom: 5px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+		}
+		.password-wrapper {
+		  display: flex;
+		  align-items: center;
+		}
+
+		.password-icon {
+			margin-left: -30px;
+			cursor: pointer;
+		}
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+  	
+    <form method="POST" action="{{ url_for('login') }}">
+		<h2>Network Management Solution</h2>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <input type="submit" value="Login">
+    </form>
+	  {% if error %}
+        <center><p style="color: red;">{{ error }}</p></center>
+    {% endif %}
+</body>
+</html>

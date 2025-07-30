@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backup in Progress</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px 60px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .spinner {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #007bff; /* Blue */
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+            margin: 30px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #status-message {
+            font-size: 1.2em;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #results-container {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            text-align: left;
+            max-height: 300px; /* Limit height for scroll */
+            overflow-y: auto; /* Enable scroll if content overflows */
+            white-space: pre-wrap; /* Preserve whitespace and wrap lines */
+            word-wrap: break-word; /* Break long words */
+        }
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none; /* For link styling */
+            font-size: 1em;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Manual Backup</h2>
+        <div class="spinner"></div>
+        <p id="status-message">Backup in progress... Please wait.</p>
+        <div id="results-container"></div>
+       
+
+    </div>
+
+	 <script>
+		const statusMessage = document.getElementById('status-message');
+		const resultsContainer = document.getElementById('results-container');
+		let pollingInterval;
+
+		function checkBackupStatus() {
+			fetch('/backup_status')
+				.then(response => response.json())
+				.then(data => {
+					if (data.running) {
+						statusMessage.textContent = "Backup still running... Please wait.";
+					} else {
+						clearInterval(pollingInterval); // Stop polling
+						statusMessage.textContent = "Backup complete!";
+						// CORRECTED LINE HERE: Using '\n' instead of '\\n'
+						resultsContainer.innerHTML = '<h3>Backup Results:</h3>' +
+													 '<pre>' + data.results.join('\n') + '</pre>';
+						document.querySelector('.spinner').style.display = 'none';
+					}
+				})
+				.catch(error => {
+					console.error('Error fetching backup status:', error);
+					clearInterval(pollingInterval); // Stop polling on error
+					statusMessage.textContent = "Error checking backup status.";
+					resultsContainer.innerHTML = '<p style="color: red;">Failed to load backup status. Please try again later.</p>';
+					document.querySelector('.spinner').style.display = 'none';
+				});
+		}
+
+		// Start polling every 3 seconds (adjust as needed)
+		pollingInterval = setInterval(checkBackupStatus, 3000);
+
+		// Initial check on page load
+		checkBackupStatus();
+	</script>
+</body>
+</html>

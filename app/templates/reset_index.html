@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h2 {
+            color: #d9534f;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #d9534f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #c9302c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>System Reset</h2>
+        <p>This action will reset all device and user databases, and recreate necessary folders.</p>
+        <p>Are you sure you want to proceed with the system reset?</p>
+        <form action="{{ url_for('confirm_reset') }}" method="post">
+            <button type="submit">Yes, Reset System</button>
+        </form>
+    </div>
+</body>
+</html>
